@@ -3,7 +3,7 @@
     "description": "Extension for sam-it/abac yii2 connector with camel cased database attributes",
     "type": "library",
     "require": {
-        "php": "7.1",
+        "php": "^7.1",
 
         "sam-it/abac": "^1.4.2",
         "yiisoft/yii2": "~2.0.19"
