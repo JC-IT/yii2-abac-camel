@@ -1,0 +1,20 @@
+{
+    "name": "jc-it/yii2-abac-camel",
+    "description": "Extension for sam-it/abac yii2 connector with camel cased database attributes",
+    "type": "library",
+    "require": {
+        "sam-it/abac": "^1.4.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joey Claessen",
+            "email": "joey_claessen@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "JCIT\\abac\\": ["src/"]
+        }
+    }
+}
