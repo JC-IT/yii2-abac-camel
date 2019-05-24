@@ -3,13 +3,22 @@
     "description": "Extension for sam-it/abac yii2 connector with camel cased database attributes",
     "type": "library",
     "require": {
-        "sam-it/abac": "^1.4.2"
+        "php": "7.1",
+
+        "sam-it/abac": "^1.4.2",
+        "yiisoft/yii2": "~2.0.19"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Joey Claessen",
             "email": "joey_claessen@hotmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
         }
     ],
     "autoload": {

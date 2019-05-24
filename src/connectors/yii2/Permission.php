@@ -2,6 +2,15 @@
 
 namespace JCIT\abac\connectors\yii2;
 
+use SamIT\abac\interfaces\Authorizable as AuthorizableInterface;
+use SamIT\abac\interfaces\Permission as PermissionInterface;
+use yii\base\InvalidConfigException;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+use yii\validators\RequiredValidator;
+use yii\validators\StringValidator;
+use yii\validators\UniqueValidator;
+
 /**
  * Class Permission
  * @package common\models\activeRecord
@@ -12,10 +21,15 @@ namespace JCIT\abac\connectors\yii2;
  * @property string $targetName [varchar(100)]
  * @property string $targetId [varchar(100)]
  * @property string $permission [varchar(100)]
+ *
+ * @property null|AuthorizableInterface $target
+ * @property null|AuthorizableInterface $source
  */
-class Permission extends ActiveRecord
+class Permission
+    extends ActiveRecord
+    implements PermissionInterface
 {
-    use Authorizable;
+    use AuthorizableTrait;
 
     const PERMISSION_ADMINISTER = 'admin';
     const PERMISSION_CREATE = 'create';
@@ -111,16 +125,6 @@ class Permission extends ActiveRecord
     }
 
     /**
-     * @return array
-     */
-    public function attributeLabels(): array
-    {
-        return [
-            'permissionLabel' => \Yii::t('app', 'Permission')
-        ];
-    }
-
-    /**
      * @param $sourceName
      * @param $sourceId
      * @param $targetName
@@ -137,7 +141,7 @@ class Permission extends ActiveRecord
      * @return ActiveQuery
      * @throws InvalidConfigException
      */
-    public static function find(): ActiveQuery
+    public static function find()
     {
         return \Yii::createObject(PermissionQuery::class, [get_called_class()]);
     }
@@ -269,8 +273,8 @@ class Permission extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['sourceName', 'sourceId', 'targetName', 'targetId', 'permission'], 'required'],
-            [['sourceName', 'sourceId', 'targetName', 'targetId', 'permission'], 'unique', 'targetAttribute' => ['sourceName', 'sourceId', 'targetName', 'targetId', 'permission']],
+            [['sourceName', 'sourceId', 'targetName', 'targetId', 'permission'], RequiredValidator::class],
+            [['sourceName', 'sourceId', 'targetName', 'targetId', 'permission'], UniqueValidator::class, 'targetAttribute' => ['sourceName', 'sourceId', 'targetName', 'targetId', 'permission']],
             [['permission'], StringValidator::class, 'min' => 1]
         ];
     }
